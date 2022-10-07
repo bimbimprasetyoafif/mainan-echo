@@ -93,7 +93,7 @@ func HandlerDeleteUsersByID(c echo.Context) error {
 		})
 	}
 
-	res := databases.DB.Delete(&model.Users{}, "id = ?", idInt)
+	res := databases.DB.Unscoped().Delete(&model.Users{}, "id = ?", idInt)
 	if res.Error != nil {
 		return c.JSON(500, map[string]interface{}{
 			"message": err.Error(),
