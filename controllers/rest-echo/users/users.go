@@ -1,8 +1,10 @@
 package users
 
 import (
+	"fmt"
 	"github.com/coba/databases"
 	"github.com/coba/model"
+	"github.com/coba/service/users"
 	"github.com/labstack/echo/v4"
 	"strconv"
 )
@@ -12,10 +14,19 @@ type DTOUser struct {
 	Email string `json:"email"`
 }
 
-func HandlerUsersAll(c echo.Context) error {
-	u := []DTOUser{}
+type HandlerUser struct {
+	UserService users.UserService
+}
 
-	databases.DB.Model(&model.Users{}).Find(&u)
+func (h *HandlerUser) HandlerUsersAll(c echo.Context) error {
+	u, err := h.UserService.GetAllUser()
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return c.JSON(500, map[string]interface{}{
+			"message": "something wrong",
+		})
+	}
 
 	return c.JSON(200, map[string]interface{}{
 		"users": u,

@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/coba/config"
 	"github.com/coba/databases"
+	"github.com/coba/routes"
 	v1 "github.com/coba/routes/v1"
 )
 
@@ -11,8 +12,18 @@ func main() {
 
 	databases.InitDatabase()
 
-	e, trace := v1.InitRoute()
+	dbSql := databases.InitDatabaseSql()
+
+	roitePayload := &routes.Payload{
+		DBSql:  dbSql,
+		Config: config.Cfg,
+	}
+
+	roitePayload.InitUserService()
+
+	e, trace := v1.InitRoute(roitePayload)
 	defer trace.Close()
+
 	//
 	e.Start(config.Cfg.APIPort)
 

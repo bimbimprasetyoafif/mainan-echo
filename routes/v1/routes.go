@@ -7,6 +7,7 @@ import (
 	"github.com/coba/controllers/rest-echo/helo"
 	usersEcho "github.com/coba/controllers/rest-echo/users"
 	usersHttp "github.com/coba/controllers/rest-http/users"
+	"github.com/coba/routes"
 	"github.com/labstack/echo-contrib/jaegertracing"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -14,7 +15,7 @@ import (
 	"net/http"
 )
 
-func InitRoute() (*echo.Echo, io.Closer) {
+func InitRoute(payload *routes.Payload) (*echo.Echo, io.Closer) {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
@@ -31,17 +32,16 @@ func InitRoute() (*echo.Echo, io.Closer) {
 		}))
 	h.GET("", helo.HandlerHello)
 
+	hUser := usersEcho.HandlerUser{
+		UserService: payload.GetUserService(),
+	}
+
 	u := v1.Group(c.UsersIndex)
-	u.GET("", usersEcho.HandlerUsersAll)
+	u.GET("", hUser.HandlerUsersAll)
 	u.POST("", usersEcho.HandlerCreateUsers)
 	u.GET("/:id", usersEcho.HandlerUsersByID)
 	u.DELETE("/:id", usersEcho.HandlerDeleteUsersByID)
 	u.PUT("/:id", usersEcho.HandlerUpdateUsers)
-
-	v2 := e.Group("/v2")
-	v2.GET("", func(c echo.Context) error {
-		return c.String(200, "ini v2")
-	})
 
 	return e, trace
 }
