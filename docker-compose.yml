@@ -10,8 +10,7 @@ services:
       interval: 5s
 
   rest_api-user:
-    image: "project-simple:1.2"
-#    build: .
+    image: "bimbimprasetyoafif/project-simple:1.2"
     ports:
       - "7979:9999"
     env_file:

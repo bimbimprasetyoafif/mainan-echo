@@ -15,6 +15,7 @@ func main() {
 	dbSql := databases.InitDatabaseSql()
 
 	roitePayload := &routes.Payload{
+		DBGorm: databases.DB,
 		DBSql:  dbSql,
 		Config: config.Cfg,
 	}

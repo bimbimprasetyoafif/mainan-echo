@@ -3,19 +3,24 @@ package databases
 import (
 	"database/sql"
 	"fmt"
+	"github.com/coba/config"
 	"github.com/coba/model"
 	m "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
 var DB *gorm.DB
 
 func InitDatabase() {
-	alamat := os.Getenv("DB_ADDRESS")
+	cfg := config.Cfg
+
+	alamat := cfg.DB_ADDRESS
+	username := cfg.DB_USERNAME
+	password := cfg.DB_PASSWORD
+	dbName := cfg.DB_NAME
 	dsn := fmt.Sprintf(
-		"root:root@tcp(%s)/orm_aja?charset=utf8mb4&parseTime=True&loc=Local", alamat)
+		"%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, password, alamat, dbName)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		AllowGlobalUpdate: true,
 	})

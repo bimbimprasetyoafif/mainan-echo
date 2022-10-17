@@ -25,7 +25,7 @@ func (p *Payload) InitUserService() {
 }
 
 func (p *Payload) InitRepoMysql() {
-	p.repoSql = repository.NewMysql(p.DBSql)
+	p.repoSql = repository.NewGorm(p.DBGorm)
 }
 
 func (p *Payload) GetUserService() uService.UserService {

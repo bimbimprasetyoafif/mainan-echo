@@ -9,5 +9,13 @@ docker-build:
 
 docker-run: docker-build
 
-test:
+build:
+	go build -o main.app
+
+test: build
 	go test ./...
+
+linter: test
+	golangci-lint run ./...
+
+test-all: linter

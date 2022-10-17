@@ -7,6 +7,10 @@ import (
 
 type Config struct {
 	APIPort     string
+	DB_ADDRESS  string
+	DB_USERNAME string
+	DB_PASSWORD string
+	DB_NAME     string
 	APIKey      string
 	TokenSecret string
 }
