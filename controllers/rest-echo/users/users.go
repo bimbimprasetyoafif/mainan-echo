@@ -36,7 +36,7 @@ func (h *HandlerUser) HandlerUsersAll(c echo.Context) error {
 func HandlerCreateUsers(c echo.Context) error {
 	var u DTOUser
 
-	c.Bind(&u)
+	_ = c.Bind(&u)
 
 	databases.DB.Create(&model.Users{
 		Name:  u.Name,

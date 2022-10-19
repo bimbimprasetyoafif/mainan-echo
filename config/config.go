@@ -28,7 +28,7 @@ func InitConfig() {
 		fmt.Println(err)
 	}
 
-	viper.Unmarshal(cfg)
+	_ = viper.Unmarshal(cfg)
 
 	// baca env
 	//cfg.APIPort = SetEnv("APIPort", ":6969")

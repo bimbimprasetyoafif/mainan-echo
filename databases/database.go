@@ -30,7 +30,7 @@ func InitDatabase() {
 
 	DB = db
 
-	DB.AutoMigrate(&model.Users{}, &model.ProfilePicture{})
+	_ = DB.AutoMigrate(&model.Users{}, &model.ProfilePicture{})
 
 }
 
