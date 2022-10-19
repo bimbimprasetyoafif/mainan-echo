@@ -1,0 +1,16 @@
+name: ini ci golang
+on:
+  pull_request:
+    branches:
+      - "master"
+jobs:
+  lint-testing:
+    runs-on: ubuntu-latest
+    name: "ini unitest"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.17
+      - name: run linting
+        uses: golangci/golangci-lint-action@v3
