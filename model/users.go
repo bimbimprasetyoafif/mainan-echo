@@ -8,3 +8,8 @@ type Users struct {
 	Email          string
 	ProfilePicture ProfilePicture
 }
+
+type UsersCommon struct {
+	Name  string
+	Email string
+}
