@@ -26,7 +26,7 @@ func main() {
 	defer trace.Close()
 
 	//
-	_ = e.Start(config.Cfg.APIPort)
+	e.Start(config.Cfg.APIPort)
 
 	//http.HandleFunc("/", HandlerA)
 
