@@ -53,10 +53,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            sudo docker stop be
-            sudo docker container rm be
+            sudo docker stop app
+            sudo docker container rm app
             sudo docker pull bimoprasetyoafif/bimo-app:latest
             sudo docker run -d -v $PWD/.env:/.env -p 80:6969 --name app bimoprasetyoafif/bimo-app:latest
-#            1. ngeremove image latest
-#            2. nge pull image latest
-#            3. rerun
