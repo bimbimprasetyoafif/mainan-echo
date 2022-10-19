@@ -13,7 +13,7 @@ func HandlerHello(c echo.Context) error {
 
 	fmt.Println(c.Request().Header)
 
-	return c.String(200, "ini halo")
+	return c.String(200, "ini halo versi 2")
 }
 
 func HandlerLogin(c echo.Context) error {
