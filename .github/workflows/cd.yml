@@ -19,12 +19,14 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    name: "ini unitest"
+    name: "ini deploy"
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-go@v3
         with:
           go-version: 1.18
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -42,3 +44,19 @@ jobs:
         with:
           push: true
           tags: bimoprasetyoafif/bimo-app:latest
+
+      - name: update aws instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-54-204-71-78.compute-1.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            sudo docker stop be
+            sudo docker container rm be
+            sudo docker pull bimoprasetyoafif/bimo-app:latest
+            sudo docker run -d -v $PWD/.env:/.env -p 80:6969 --name app bimoprasetyoafif/bimo-app:latest
+#            1. ngeremove image latest
+#            2. nge pull image latest
+#            3. rerun
